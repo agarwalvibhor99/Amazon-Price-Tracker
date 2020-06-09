@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import smtplib
 from datetime import datetime 
+import time
 URL = 'https://www.amazon.com/Apple-Watch-GPS-40mm-Aluminum/dp/B07XR5TRSZ/ref=sr_1_4?dchild=1&keywords=apple+watch&qid=1591688861&sr=8-4'
 
 headers = {#Use your user agent here }
@@ -20,13 +21,13 @@ def price_check():
 
     storePrice(title, price)
 
-    if(price>200):
+    if(price<200):
         send_email(title, price)
 
 
 def storePrice(title, price):
     priceHistory = open("Price", "a+")
-    priceHistory.write("Price of {} on {} is ${}".format(title, datetime.date(datetime.now())))
+    priceHistory.write("Price of {} on {} is ${}".format(title, datetime.date(datetime.now()), price))
 
 def send_email(title, price):
     server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -50,6 +51,7 @@ def send_email(title, price):
 
     print("Email successfully sent")
     server.quit()
+    return
 
 while(True):
     price_check()
