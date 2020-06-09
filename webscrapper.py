@@ -27,7 +27,7 @@ def price_check():
 
 def storePrice(title, price):
     priceHistory = open("Price", "a+")
-    priceHistory.write("Price of {} on {} is ${}".format(title, datetime.date(datetime.now()), price))
+    priceHistory.write("Price of {} on {} is ${}\n".format(title, datetime.date(datetime.now()), price))
 
 def send_email(title, price):
     server = smtplib.SMTP('smtp.gmail.com', 587)
